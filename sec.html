@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .pagination {
+      display: inline-block;
+    }
+    .pagination a {
+      color: black;
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+    }
+    .pagination a.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<div id="data" class="pagination">
+  <!-- Content will be inserted here -->
+  hello
+</div>
+
+<div id="pagination" class="pagination">
+  <!-- Pagination links will be inserted here -->
+  hello
+</div>
+
+<script>
+  const itemsPerPage = 5; // Number of items to display per page
+  const data = [/* Your data array here */1,2,3,4,5,6,7,8]; // Replace with your data array
+
+  function displayData(pageNumber) {
+    const startIndex = (pageNumber - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const dataToShow = data.slice(startIndex, endIndex);
+
+    const dataContainer = document.getElementById("data");
+    dataContainer.innerHTML = '';
+
+    for (const item of dataToShow) {
+      const itemElement = document.createElement("div");
+      itemElement.textContent = item;
+      dataContainer.appendChild(itemElement);
+    }
+  }
+
+  function displayPagination(currentPage) {
+    const pageCount = Math.ceil(data.length / itemsPerPage);
+    const paginationContainer = document.getElementById("pagination");
+    paginationContainer.innerHTML = '';
+
+    for (let i = 1; i <= pageCount; i++) {
+      const pageLink = document.createElement("a");
+      pageLink.textContent = i;
+      if (i === currentPage) {
+        pageLink.classList.add("active");
+      }
+      pageLink.addEventListener("click", () => {
+        displayData(i);
+        displayPagination(i);
+      });
+
+      paginationContainer.appendChild(pageLink);
+    }
+  }
+
+  displayData(1); // Display initial page
+  displayPagination(1); // Display initial pagination links
+</script>
+
+</body>
+</html>
